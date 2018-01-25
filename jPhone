@@ -293,3 +293,5 @@ raw () {
 	read -n 1 -s # Read a single keystroke, without displaying it on the console
 	sudo screen /dev/serial0 115200 # Create a screen session connected to the UART serial port
 } # End raw function 
+
+# EOF
