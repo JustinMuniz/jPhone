@@ -13,7 +13,7 @@
 
 # Program Entry Point
 
-# Command interpreter
+## Command interpreter
 case $1 in # Test value of the second program arguement, the command
 	setup | -s | --setup )  # Three values to run the setup command
 		setup ;; # Run the setup function and exit the test switch
@@ -36,20 +36,20 @@ exit # Exit the program without error
 setup () {  # ********************************************************************************************************************************************************* (untested)
 	echo "Initializing installation and configuration of jPhone software..."
 
-	# Configure accounts
+	## Configure accounts
 	echo "Configuring accounts..."
 	# The preconfigured user name is "pi"
 	passwd # Change user password
 	echo "Accounts configured."
 
-	# Set keyboard layout
+	## Set keyboard layout
 	echo "Configuring keyboard layout for United States..."
 	echo 'XKBMODEL="pc105"' | sudo tee /etc/default/keyboard > /dev/null # Overwrite the configuration file with the model
 	echo 'XKBLAYOUT="us"' | sudo tee --append /etc/default/keyboard > /dev/null # Add to the configuration file the layout
 	invoke-rc.d keyboard-setup start # Reload the keyboard keymap
 	echo "Keyboard layout configured."
 
-	# Configure Wifi and Ethernet connections
+	## Configure Wifi and Ethernet connections
 	echo "Configuring local area network connections..."
 	# YET TO BE IMPLEMENTED
 	# FOR TESTING PURPOSES ONLY, THIS WILL BE PHASED OUT
@@ -64,13 +64,13 @@ setup () {  # ******************************************************************
 	sudo echo "static domain_name_servers=7.6.7.1 8.8.8.8" >> /etc/dhcpcd.conf # Configure DNS resolution servers
 	echo "Network connections configured."
 
-	# Enable SSH server
+	## Enable SSH server
 	echo "Configuring SSH server..."
 	sudo systemctl enable ssh # Start SSH server at each boot
 	sudo systemctl start ssh # Start SSH server immediately
 	echo "SSH server configured."
 
-	# Configure serial connection to 3G modem
+	## Configure serial connection to 3G modem
 	echo "Configuring serial connection to 3G modem..."
 	sudo sed 's/ console=serial0,115200//' /boot/cmdline.txt # Disable the serial console
 	echo 'enable_uart=1' | sudo tee /boot/config.text > /dev/null # Enable uart on system boot
@@ -98,13 +98,13 @@ setup () {  # ******************************************************************
 	echo "Calculating available persistant stoarage space..."
 	df -h # Display SD card storage usage
 
-	# Update the existing software
+	## Update the existing software
 	echo "Updating distrobution software..."
 	sudo apt-get update # Synchronize the aptitude database
 	sudo apt-get dist-upgrade # Update installed packages
 	echo "Software update complete."
 
-	# Install required software
+	## Install required software
 	echo "Installing additional required software..."
 	sudo apt-get install ppp screen
 	# YET TO BE IMPLEMENTED
@@ -119,7 +119,7 @@ setup () {  # ******************************************************************
 	# echo 'consoleblank=0 loglevel=1 quiet' | sudo tee /boot/cmdline.txt > /dev/null
 	# https://yingtongli.me/blog/2016/12/21/splash.html
 
-	# Explain that system will reboot and wait for a keystroke on the keyboard
+	## Explain that system will reboot and wait for a keystroke on the keyboard
 	echo "jPhone initial configuration complete!"
 	echo "The system must reboot to finalize various changes."
 	echo "Press any key to reboot."
@@ -129,7 +129,7 @@ setup () {  # ******************************************************************
 } # End of setup function
 
 maintain () {
-	# Update the existing software
+	## Update the existing software
 	sudo apt-get update # Synchronize the aptitude database
 	sudo apt-get dist-upgrade # Update installed packages
 
@@ -145,11 +145,9 @@ maintain () {
 # Function containing the test command
 testing () {
 	# Perform general tests
-
 	general # Run the general test function
 
-	# Perform specific tests
-
+	## Perform specific tests
 	while # Do... While loop for reading sub-commands, always runs once
 		# Sub-command interpreter
 		case $2 in # Test value of the third arguement (the sub-command parameter)
@@ -177,7 +175,7 @@ testing () {
 	done # End of Do... While loop
 } # End of testing function
 
-# Function containing the usage command
+## Function containing the usage command
 usage () {  # ********************************************************************************************************************************************************* (untested)
     echo "" # Empty line before usage
 	echo "Usage: jPhone COMMAND [OPTION] ..."
@@ -200,6 +198,7 @@ usage () {  # ******************************************************************
 	echo "" # Empty line after usage
 } # End of usage function
 
+# Function to conduct tests that should be performed before user-specified tests
 general () {
 	# Test if the Fona 3G is connected
 	echo "Testing the serial connection..."
@@ -219,7 +218,7 @@ general () {
 
 call () {
 	echo "Enter a phone number:"
-	read number # Prompt user for a number ************************************************************************************************************* (doesn't verify input)
+	read number # Prompt user for a number ******************************************************************************************************************************* (doesn't verify input)
 	printf "ATD%s;\r\n" "$number" > /dev/serial0 # Send ATD instruction to fona, along with phone number and semi-colon
 	read -r carrier < /dev/serial0 # clear fona output
 	read -r carrier < /dev/serial0 # clear fona output
@@ -230,7 +229,7 @@ call () {
 	read -n 1 -s # Read a single keystroke, without displaying it on the console
 	printf "ATH\r\n" > /dev/serial0 # When user hits any key send ATH to Fona to hang up the voice call
 	read -r carrier < /dev/serial0 # clear fona output
-	read -r carrier < /dev/serial0 # clear fona output *********************************************************************************************** (outputs call time)
+	read -r carrier < /dev/serial0 # clear fona output **************************************************************************************************************** (outputs call time)
 } # End of call function
 
 answer () { # ********************************************************************************************************************************************************* (untested)
@@ -267,7 +266,7 @@ battery () {
 } # End of battery function
 
 network () {
-	# Display ICCID of installed SIM
+	## Display ICCID of installed SIM
 	printf "AT+CMEE=2\r\n" > /dev/serial0 # Enable verbose errors
 	read -r iccid < /dev/serial0 # clear fona output
 	read -r iccid < /dev/serial0 # clear fona output
@@ -278,7 +277,7 @@ network () {
 	read -r iccid < /dev/serial0 # clear fona output
 	read -r iccid < /dev/serial0 # clear fona output
 
-	# Display carrier
+	## Display carrier
 	printf "AT+COPS?\r\n" > /dev/serial0
 	read -r carrier < /dev/serial0 # clear fona output
 	read -r carrier < /dev/serial0 # clear fona output
@@ -292,6 +291,6 @@ raw () {
 	echo "Press any key to continue."
 	read -n 1 -s # Read a single keystroke, without displaying it on the console
 	sudo screen /dev/serial0 115200 # Create a screen session connected to the UART serial port
-} # End raw function 
+} # End raw function
 
 # EOF
