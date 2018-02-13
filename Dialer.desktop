@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Dialer
+Type=Application
+Terminal=false
+Icon=/home/pi/Documents/jPhone/Dialer/PhoneGray.png
+Exec=/home/pi/Documents/jPhone/Dialer/jPhoneDialer.py
