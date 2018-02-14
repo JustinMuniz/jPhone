@@ -6,7 +6,6 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 global DialerEntry
-DialerEntry = "string"
 DialerEntry = ""
 
 def AddNumber(number):
@@ -19,9 +18,9 @@ class Handler:
 		Gtk.main_quit(*args)
 
 	def ClickedDelete(self, *args):
-		global DialerEntry
-		DialerEntry = DialerEntry[:-1]
-		entrybox.set_text(DialerEntry)
+		global DialerEntry # Use global variable in this function, not local which is the default
+		DialerEntry = DialerEntry[:-1] # Remove the last character from the character array
+		entrybox.set_text(DialerEntry) # Set the DialerEntry text to the resulting string 
 
 	def ClickedOne(self, *args):
 		AddNumber("1")
@@ -83,7 +82,8 @@ class Handler:
 		ser.write(cmd.encode())
 		msg=ser.read(64)
 		print(msg)
-
+# End Handler class
+		
 # Create window from XML template, connect signals to handler class and methods
 builder = Gtk.Builder()
 builder.add_from_file("/home/pi/Documents/jPhone/Dialer/jPhoneDialer.glade")
