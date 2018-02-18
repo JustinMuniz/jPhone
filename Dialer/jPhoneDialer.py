@@ -66,23 +66,31 @@ class Handler:
 		ser.write(cmd.encode())
 		msg=ser.read(64)
 		print(msg)
+		if msg == "NO CARRIER":
+			# Modal dialog box to notify user the call failed
+			dialog = Gtk.MessageDialog(window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "Call Failed")
+			dialog.format_secondary_text("Click OK to acknowledge.")
+			dialog.run()
+			dialog.destroy()
+			ser.close() # Close the serial connection, to free it up for later
+		else:
 # Show status dialog
-		dialog = Gtk.MessageDialog(window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "Attempting to dial "+DialerEntry+"...")
-		dialog.format_secondary_text("Click OK to hang up.")
-		dialog.run()
-		print("INFO dialog closed")
-		dialog.destroy()
+			dialog = Gtk.MessageDialog(window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, "Attempting to dial "+DialerEntry+"...")
+			dialog.format_secondary_text("Click OK to hang up.")
+			dialog.run()
+			print("INFO dialog closed")
+			dialog.destroy()
 # Prepare to hang up
-		cmd="AT+CVHU=0\r"
-		ser.write(cmd.encode())
-		msg=ser.read(64)
-		print(msg)
+			cmd="AT+CVHU=0\r"
+			ser.write(cmd.encode())
+			msg=ser.read(64)
+			print(msg)
 # Hang up
-		cmd="ATH\r"
-		ser.write(cmd.encode())
-		msg=ser.read(64)
-		print(msg)
-		ser.close() # Close the serial port
+			cmd="ATH\r"
+			ser.write(cmd.encode())
+			msg=ser.read(64)
+			print(msg)
+			ser.close() # Close the serial port
 # End Handler class
 		
 # Create window from XML template, connect signals to handler class and methods
@@ -98,5 +106,4 @@ window.show_all()
 # Call GTK+ library initialization
 Gtk.main()
 
-# Test to make sure call was initiated
 # Transition to in-call interface application once call is placed
