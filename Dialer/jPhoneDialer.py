@@ -1,17 +1,17 @@
 #/usr/bin/python
 
-import serial
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+import serial # Library for serial port communications
+import gi # Library for Python GObject introspection, the GTK Python bindings
+gi.require_version('Gtk', '3.0') # Set the minimum compatible GTK+ version to 3.0, which is the testing environment
+from gi.repository import Gtk # The GTK module
 
-global DialerEntry
-DialerEntry = ""
+global DialerEntry # Declare the global variable that contains the telephone number input string
+DialerEntry = "" # Initialize the telephone number string as empty
 
-def AddNumber(number):
-	global DialerEntry
-	DialerEntry += number
-	entrybox.set_text(DialerEntry)
+def AddNumber(number): # Local method to add a digit to the telephone number
+	global DialerEntry # Declaration to use the global variable, not a new local one
+	DialerEntry += number # Set the string to itself with the additional number concatenated to the end of it
+	entrybox.set_text(DialerEntry) # Set the telephone number entry box widget to the modified string
 
 class Handler:
 	def WindowDestroyed(self, *args):
@@ -82,6 +82,7 @@ class Handler:
 		ser.write(cmd.encode())
 		msg=ser.read(64)
 		print(msg)
+		ser.close() # Close the serial port
 # End Handler class
 		
 # Create window from XML template, connect signals to handler class and methods
@@ -96,3 +97,6 @@ window.show_all()
 
 # Call GTK+ library initialization
 Gtk.main()
+
+# Test to make sure call was initiated
+# Transition to in-call interface application once call is placed
