@@ -15,7 +15,6 @@ import sys # Library for exiting python
 from time import sleep # Library for passing a specific number of time before continuing the script
 
 class Handler: # Class with methods connected to the GTK widget signals
-#	def WindowDestroyed(self, *args): # Method called when the window is closed
 	def ClickedAnswer(self, *args): # Method called when Answer button is clicked
 		# Replace with in-call interface
 		# Tell modem to answer the call
@@ -40,7 +39,6 @@ class Handler: # Class with methods connected to the GTK widget signals
 			HangUp() # Hang up voice call
 	def ClickedDecline(self, *args): # Method called when Decline button is clicked
 		HangUp() # Hang up voice call
-		
 # End Handler class
 
 Gtk.main() # Call GTK+ library initialization
