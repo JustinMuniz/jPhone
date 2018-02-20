@@ -5,14 +5,14 @@ try:
     import RPi.GPIO as GPIO # GPIO library to read / set GPIO pin in / out
 except RuntimeError:
     print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this by using 'sudo' to run your script")
-
 GPIO.setmode(GPIO.BCM)   # Set GPIO pin numbering mode
 GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP) # GPIO 23 set up as input. It is pulled up to match the FONA RI default status  
 
+# Load support modules and libraries
 import serial # Library for serial port communications
 import sys # Library for exiting python
 from time import sleep # Library for passing a specific number of time before continuing the script
-from subprocess import call# Library for executing external processes and monitoring them
+from subprocess import Popen # Library for executing external processes and monitoring them
 
 def CleanUp(ExitStatus): # Local method to free up resources and exit Python
 	GPIO.cleanup() # clean up GPIO on CTRL+C exit
@@ -40,10 +40,9 @@ try: # Ensure a way to catch exceptions
 #			 # Run script to notify of incoming text message
 			placeholder = 1
 		else: # If BCM pin 23 is still falling or low after 120ms it is a phone call
-			# Figure out how to do this without waiting for execution of child to finish
-			call(["python", "/home/pi/Documents/jPhone/Ringer/jPhoneRinger.py"]) # Run script to display incoming call interface
+#			# Figure out how to do this without waiting for execution of child to finish
+			Popen(["python", "/home/pi/Documents/jPhone/Ringer/jPhoneRinger.py"]) # Run script to display incoming call interface, without waiting for it to execute
 except SystemExit: # Give up on waiting if Python receives instructions to terminate from the operating system
 	CleanUp() # Run the clean up function to free resources
-#print("Something is wrong") # Debug status
 
 # Write scripts to add and remove ringer from system's boot process
