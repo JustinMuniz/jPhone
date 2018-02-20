@@ -38,9 +38,8 @@ try: # Ensure a way to catch exceptions
 		sleep(0.12) # Wait 120ms
 		if GPIO.input(23) == GPIO.HIGH:# Probe BCM pin 23 to check if it returned to high
 #			 # Run script to notify of incoming text message
-			placeholder = 1
+			placeholder = 1 # Placeholder
 		else: # If BCM pin 23 is still falling or low after 120ms it is a phone call
-#			# Figure out how to do this without waiting for execution of child to finish
 			Popen(["python", "/home/pi/Documents/jPhone/Ringer/jPhoneRinger.py"]) # Run script to display incoming call interface, without waiting for it to execute
 except SystemExit: # Give up on waiting if Python receives instructions to terminate from the operating system
 	CleanUp() # Run the clean up function to free resources
