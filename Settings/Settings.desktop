@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Settings
+Type=Application
+Terminal=false
+Icon=/home/pi/Documents/jPhone/Settings/Settings.png
+Exec=/home/pi/Documents/jPhone/Settings/jPhoneSettings.py
