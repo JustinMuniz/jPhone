@@ -9,6 +9,7 @@
     <property name="title" translatable="yes">jPhone Dialer</property>
     <property name="default_width">700</property>
     <property name="default_height">356</property>
+    <property name="icon">Dialer.png</property>
     <signal name="destroy" handler="WindowDestroyed" swapped="no"/>
     <child>
       <object class="GtkLayout">
