@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=jPhone Voice Call Dialing Application With Debug Output
+Terminal=true
+Name=Dialer (Debug-Mode)
+Exec=python3 /home/pi/Documents/jPhone/Dialer/jPhoneDialer.py
+Type=Application
+Icon=/home/pi/Documents/jPhone/Dialer/DialerDebug.png
