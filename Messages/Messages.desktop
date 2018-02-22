@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Messages
+Type=Application
+Terminal=false
+Icon=/home/pi/Documents/jPhone/Messages/Messages.png
+Exec=/home/pi/Documents/jPhone/Messages/jPhoneMessages.py
