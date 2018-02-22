@@ -3,7 +3,12 @@
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkWindow" id="MainWindow">
+    <property name="width_request">700</property>
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">jPhone Ringer</property>
+    <property name="default_width">700</property>
+    <property name="icon">DialerDebug.png</property>
+    <signal name="destroy" handler="WindowDestroyed" swapped="no"/>
     <child>
       <object class="GtkFixed" id="GtkFixedLayout">
         <property name="visible">True</property>
@@ -63,28 +68,6 @@
           <packing>
             <property name="x">298</property>
             <property name="y">186</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkFontChooserDialog">
-    <property name="can_focus">False</property>
-    <property name="type_hint">dialog</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
           </packing>
         </child>
       </object>
