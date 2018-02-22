@@ -106,4 +106,5 @@ window.show_all()
 # Call GTK+ library initialization
 Gtk.main()
 
+# Test to make sure call was initiated
 # Transition to in-call interface application once call is placed
